@@ -11,6 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import HouseIcon from '@mui/icons-material/House';
 import ListItemText from '@mui/material/ListItemText';
 import {styled, useTheme} from '@mui/material/styles';
+import {useNavigate} from 'react-router-dom';
 
 interface IFitAppBar {
     open: boolean;
@@ -31,12 +32,17 @@ const FitDrawer = (props: IFitAppBar) => {
 
     const {open, setOpen} = props;
 
+    const navigate = useNavigate();
+
     const handleDrawerClose = () => {
         setOpen(false);
     };
 
     const theme = useTheme();
 
+    const handleClickNavegarBemVindo = () => {
+        navigate('/bem-vindo');
+    }
 
     return (
         <Drawer
@@ -59,16 +65,14 @@ const FitDrawer = (props: IFitAppBar) => {
             </DrawerHeader>
             <Divider/>
             <List>
-                {['Bem vindo'].map((text) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <HouseIcon/>
-                            </ListItemIcon>
-                            <ListItemText primary={text}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <ListItem disablePadding>
+                    <ListItemButton onClick={handleClickNavegarBemVindo}>
+                        <ListItemIcon>
+                            <HouseIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Bem vindo!'}/>
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Drawer>
     )

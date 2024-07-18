@@ -1,14 +1,16 @@
 import './App.css'
 import * as React from 'react';
 import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import FitAppBar from './components/FitAppBar';
-import FitDrawer, {drawerWidth} from './components/FitDrawer';
-import PageBemVindo from './pages/PageBemVindo';
+import PageBemVindo from './pages/BemVindo';
 import {useState} from 'react';
 import FitDrawerHeader from './components/FitDrawerHeader';
-
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import FitPrivateRoute from './components/FitPrivateRoute';
+import FitRouteNotFound from './components/FitRouteNotFound';
+import {SnackbarProvider} from 'notistack';
+import FitLoginRoute from './components/FitLoginRoute';
+import PageLogin from './pages/Login';
 
 const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
     open?: boolean;
@@ -19,7 +21,6 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
     ...(open && {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
@@ -30,19 +31,41 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
 }));
 
 function App() {
+
     const [open, setOpen] = useState(true);
 
-    return (
+    const router = createBrowserRouter([
+        {
+            element: <FitPrivateRoute open={open} setOpen={setOpen}/>,
+            children: [
+                {
+                    path: "/bem-vindo",
+                    element: <PageBemVindo/>,
+                },
+            ],
+            errorElement: <FitRouteNotFound/>,
+        },
+        {
+            path: "/login",
+            element: <FitLoginRoute/>,
+            children: [
+                {
+                    path: "/login",
+                    element: <PageLogin/>,
+                },
+            ],
+        },
+    ]);
 
-        <Box sx={{display: 'flex'}}>
+    return (
+        <>
+            <SnackbarProvider/>
             <CssBaseline/>
-            <FitAppBar open={open} setOpen={setOpen}/>
-            <FitDrawer open={open} setOpen={setOpen}/>
             <Main open={open}>
                 <FitDrawerHeader/>
-                <PageBemVindo/>
+                <RouterProvider router={router}/>
             </Main>
-        </Box>
+        </>
     )
 }
 

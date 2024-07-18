@@ -10,6 +10,12 @@ const DrawerHeader = styled('div')(({theme}) => ({
 }));
 
 const FitDrawerHeader = () => {
+    const localStorageToken = JSON.parse(localStorage.getItem("autenticado"));
+
+    if (!localStorageToken) {
+        return <></>
+    }
+
     return (
         <DrawerHeader/>
     )
