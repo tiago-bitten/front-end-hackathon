@@ -22,19 +22,23 @@ const FitAppBar = (props: IFitAppBar) => {
         setOpen(true);
     };
 
+    const handleDrawerOnClick = () => {
+        setOpen((prev) => !prev);
+    }
+
     const onClickLogout = () => {
         setToken('');
         navigate('/login');
     }
 
     return (
-        <AppBar color='secondary' position="fixed">
+        <AppBar color='primary' position="fixed">
             <Toolbar sx={{justifyContent: 'space-between'}}>
                 <Stack direction='row' alignItems='center'>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
+                        onClick={handleDrawerOnClick}
                         edge="start"
                         sx={{mr: 2}}
                     >

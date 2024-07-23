@@ -10,39 +10,43 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import HouseIcon from '@mui/icons-material/House';
 import ListItemText from '@mui/material/ListItemText';
-import {styled, useTheme} from '@mui/material/styles';
-import {useNavigate} from 'react-router-dom';
+import { styled, useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 interface IFitAppBar {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 
-const DrawerHeader = styled('div')(({theme}) => ({
+const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'right',
 }));
 
 export const drawerWidth = 240;
 
 const FitDrawer = (props: IFitAppBar) => {
-
-    const {open, setOpen} = props;
+    const { open, setOpen } = props;
 
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const handleDrawerClose = () => {
         setOpen(false);
     };
 
-    const theme = useTheme();
-
     const handleClickNavegarBemVindo = () => {
         navigate('/bem-vindo');
-    }
+    };
+
+    const handleClickNavegarVendas = () => {
+        navigate('/vendas');
+    };
 
     return (
         <Drawer
@@ -52,30 +56,34 @@ const FitDrawer = (props: IFitAppBar) => {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
+                    marginTop: '64px',
                 },
             }}
             variant="persistent"
             anchor="left"
             open={open}
         >
-            <DrawerHeader>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                </IconButton>
-            </DrawerHeader>
-            <Divider/>
+            <Divider />
             <List>
                 <ListItem disablePadding>
                     <ListItemButton onClick={handleClickNavegarBemVindo}>
                         <ListItemIcon>
-                            <HouseIcon/>
+                            <HomeIcon />
                         </ListItemIcon>
-                        <ListItemText primary={'Bem vindo!'}/>
+                        <ListItemText primary={'Bem vindo!'} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={handleClickNavegarVendas}>
+                        <ListItemIcon>
+                            <ShoppingCartIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Vendas'} />
                     </ListItemButton>
                 </ListItem>
             </List>
         </Drawer>
-    )
-}
+    );
+};
 
-export default FitDrawer
+export default FitDrawer;

@@ -1,20 +1,21 @@
 import './App.css'
 import * as React from 'react';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import PageBemVindo from './pages/BemVindo';
-import {useState} from 'react';
+import { useState } from 'react';
 import FitDrawerHeader from './components/FitDrawerHeader';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FitPrivateRoute from './components/FitPrivateRoute';
 import FitRouteNotFound from './components/FitRouteNotFound';
-import {SnackbarProvider} from 'notistack';
+import { SnackbarProvider } from 'notistack';
 import FitLoginRoute from './components/FitLoginRoute';
 import PageLogin from './pages/Login';
+import PageVendas from './pages/Venda';
 
-const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
-}>(({theme, open}) => ({
+}>(({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -36,22 +37,31 @@ function App() {
 
     const router = createBrowserRouter([
         {
-            element: <FitPrivateRoute open={open} setOpen={setOpen}/>,
+            element: <FitPrivateRoute open={open} setOpen={setOpen} />,
             children: [
                 {
                     path: "/bem-vindo",
-                    element: <PageBemVindo/>,
+                    element: <PageBemVindo />,
                 },
             ],
-            errorElement: <FitRouteNotFound/>,
+            errorElement: <FitRouteNotFound />,
         },
         {
             path: "/login",
-            element: <FitLoginRoute/>,
+            element: <FitLoginRoute />,
             children: [
                 {
                     path: "/login",
-                    element: <PageLogin/>,
+                    element: <PageLogin />,
+                },
+            ],
+        },
+        {
+            element: <FitPrivateRoute open={open} setOpen={setOpen} />,
+            children: [
+                {
+                    path: "/vendas",
+                    element: <PageVendas />,
                 },
             ],
         },
@@ -59,11 +69,10 @@ function App() {
 
     return (
         <>
-            <SnackbarProvider/>
-            <CssBaseline/>
+            <SnackbarProvider />
+            <CssBaseline />
             <Main open={open}>
-                <FitDrawerHeader/>
-                <RouterProvider router={router}/>
+                <RouterProvider router={router} />
             </Main>
         </>
     )

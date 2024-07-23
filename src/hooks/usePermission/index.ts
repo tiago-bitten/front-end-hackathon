@@ -5,7 +5,6 @@ import {getValueEnum} from '../../enums/utils';
 const usePermission = () => {
     const possuiPermissao = (enumPermissao: string): boolean => {
 
-        debugger;
         const codigoPermissao = getValueEnum('EnumPermissaoSistema', enumPermissao);
 
         if (!codigoPermissao) return false;

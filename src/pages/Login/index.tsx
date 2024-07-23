@@ -194,8 +194,7 @@ const PageLogin = () => {
                 </Box>
             </Box>
         </Container>
-    )
-        ;
+    );
 }
 
 export default PageLogin;
